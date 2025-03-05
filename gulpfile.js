@@ -5,7 +5,6 @@ const babel = require(`gulp-babel`);
 const uglify = require(`gulp-uglify`);
 const cleanCSS = require(`gulp-clean-css`);
 const htmlmin = require(`gulp-htmlmin`);
-const imagemin = require(`gulp-imagemin`);
 const sourcemaps = require(`gulp-sourcemaps`);
 const connect = require(`gulp-connect`);
 
