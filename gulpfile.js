@@ -1,5 +1,5 @@
 const gulp = require(`gulp`);
-const eslint = require(`gulp-eslint-new`);
+const eslint = require(`gulp-eslint`);
 const stylelint = require(`gulp-stylelint`);
 const babel = require(`gulp-babel`);
 const uglify = require(`gulp-uglify`);

@@ -29,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/Ashmit719/assignment-2--intro-to-internet-programming--cs-275--spring-2025/issues"
   },
-  "homepage": "https://github.com/Ashmit719/assignment-2--intro-to-internet-programming--cs-275--spring-2025#readme"
+  "homepage": "https://github.com/Ashmit719/assignment-2--intro-to-internet-programming--cs-275--spring-2025#readme",
+  "dependencies": {
+    "gulp-connect": "^5.7.0",
+    "gulp-sourcemaps": "^3.0.0"
+  }
 }

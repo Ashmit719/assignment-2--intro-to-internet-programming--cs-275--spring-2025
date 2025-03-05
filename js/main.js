@@ -3,6 +3,7 @@ let currentIndex = 0;
 let targetedData = [];
 
 // JSONP callback function
+// eslint-disable-next-line no-unused-vars
 const callback = (data) => {
     loadImage(data);
 };
