@@ -27,7 +27,7 @@ h1 {
 .carousel {
   position: relative;
   width: 640px;
-  margin: 20px auto;
+  margin: 0 auto;
   overflow: hidden;
   border: 2px solid #ddd;
   background-color: white;
@@ -40,6 +40,7 @@ h1 {
   flex-wrap: nowrap;
   width: 100%;
   box-sizing: border-box;
+  transform: translateX(0);
 }
 /* Individual Slide */
 .slide {
