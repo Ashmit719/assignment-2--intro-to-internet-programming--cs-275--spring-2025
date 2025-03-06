@@ -20,13 +20,13 @@ gulp.task(`lint-js`, function () {
 gulp.task(`lint-css`, function () {
     return gulp.src([
         `styles/**/*.css`, // Include all CSS files
-        `!styles/reset.css` // Exclude reset.css file as it is already linted
+        `!styles/reset.css` // Exclude reset.css (already linted)
     ])
         .pipe(stylelint({
+            configFile: `.stylelintrc.json`, // Explicitly use the config file
             reporters: [{ formatter: `string`, console: true }]
         }));
 });
-
 // Transpile & Minify JS
 gulp.task(`scripts`, function () {
     return gulp.src(`js/**/*.js`)
