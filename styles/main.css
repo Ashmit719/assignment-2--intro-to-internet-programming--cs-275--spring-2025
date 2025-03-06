@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #121111;
+  background-color: hsla(257, 82%, 4%, .97);
   color: #333;
   overflow: hidden;
 }

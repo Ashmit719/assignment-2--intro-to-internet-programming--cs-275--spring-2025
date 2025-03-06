@@ -17,12 +17,6 @@ gulp.task(`lint-js`, function () {
 });
 
 // Lint CSS
-//gulp.task(`lint-css`, function () {
-//    return gulp.src(`styles/**/*.css`)
-//        .pipe(stylelint({
-//            reporters: [{ formatter: `string`, console: true }]
-//        }));
-//});
 gulp.task(`lint-css`, function () {
     return gulp.src([
         `styles/**/*.css`, // Include all CSS files
