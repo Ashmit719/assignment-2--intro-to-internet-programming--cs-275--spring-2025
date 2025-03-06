@@ -6,7 +6,7 @@ const uglify = require(`gulp-uglify`);
 const cleanCSS = require(`gulp-clean-css`);
 const htmlmin = require(`gulp-htmlmin`);
 const sourcemaps = require(`gulp-sourcemaps`);
-const connect = require(`gulp-connect`);
+const browserSync = require(`browser-sync`).create();
 
 // Lint JS
 gulp.task(`lint-js`, function () {
@@ -19,14 +19,14 @@ gulp.task(`lint-js`, function () {
 // Lint CSS
 gulp.task(`lint-css`, function () {
     return gulp.src([
-        `styles/**/*.css`, // Include all CSS files
-        `!styles/reset.css` // Exclude reset.css (already linted)
+        `styles/**/*.css`,
+        `!styles/reset.css`
     ])
         .pipe(stylelint({
-            configFile: `.stylelintrc.json`, // Explicitly use the config file
             reporters: [{ formatter: `string`, console: true }]
         }));
 });
+
 // Transpile & Minify JS
 gulp.task(`scripts`, function () {
     return gulp.src(`js/**/*.js`)
@@ -34,44 +34,54 @@ gulp.task(`scripts`, function () {
         .pipe(babel({ presets: [`@babel/preset-env`] }))
         .pipe(uglify())
         .pipe(sourcemaps.write(`.`))
-        .pipe(gulp.dest(`prod/js`));
+        .pipe(gulp.dest(`prod/js`))
+        .pipe(browserSync.stream()); // Reload browser after JS changes
 });
 
 // Minify CSS
 gulp.task(`styles`, function () {
     return gulp.src(`styles/**/*.css`)
         .pipe(cleanCSS({ compatibility: `ie8` }))
-        .pipe(gulp.dest(`prod/styles`));
+        .pipe(gulp.dest(`prod/styles`))
+        .pipe(browserSync.stream()); // Reload browser after CSS changes
 });
 
 // Minify HTML
 gulp.task(`html`, function () {
     return gulp.src(`index.html`)
         .pipe(htmlmin({ collapseWhitespace: true }))
-        .pipe(gulp.dest(`prod`));
+        .pipe(gulp.dest(`prod`))
+        .pipe(browserSync.stream()); // Reload browser after HTML changes
 });
 
-// Copy Images (NO COMPRESSION)
+// Copy Images (No Compression)
 gulp.task(`images`, function () {
     return gulp.src(`img/**/*`)
         .pipe(gulp.dest(`prod/img`));
 });
-// Copy JSON files to prod/json
+
+// Copy JSON files
 gulp.task(`json`, function () {
-    return gulp.src(`json/**/*.json`) // Source JSON files
-        .pipe(gulp.dest(`prod/json`)); // Destination folder
+    return gulp.src(`json/**/*.json`)
+        .pipe(gulp.dest(`prod/json`));
 });
-// Watch files and reload browser
-gulp.task(`watch`, function () {
-    connect.server({ livereload: true });
+
+// Serve & Watch Task with Browser Sync
+gulp.task(`serve`, function () {
+    browserSync.init({
+        server: { baseDir: `.` }, // Serve from project root
+        notify: true,
+        reloadDelay: 50
+    });
+
     gulp.watch(`js/**/*.js`, gulp.series(`lint-js`, `scripts`));
     gulp.watch(`styles/**/*.css`, gulp.series(`lint-css`, `styles`));
     gulp.watch(`index.html`, gulp.series(`html`));
     gulp.watch(`json/**/*.json`, gulp.series(`json`));
 });
 
-// Default task for development
-gulp.task(`default`, gulp.series(`lint-js`, `lint-css`, `watch`));
+// Default Task (Runs Development Workflow)
+gulp.task(`default`, gulp.series(`lint-js`, `lint-css`, `serve`));
 
-// Production build task
+// Production Build Task
 gulp.task(`build`, gulp.series(`html`, `styles`, `scripts`, `images`, `json`));
