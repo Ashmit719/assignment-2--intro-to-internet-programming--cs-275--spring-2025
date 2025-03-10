@@ -31,7 +31,7 @@ gulp.task(`lint-css`, function () {
 gulp.task(`scripts`, function () {
     return gulp.src(`js/**/*.js`)
         .pipe(sourcemaps.init())
-        .pipe(babel({ presets: [`@babel/preset-env`] }))
+        .pipe(babel())
         .pipe(uglify())
         .pipe(sourcemaps.write(`.`))
         .pipe(gulp.dest(`prod/js`))
