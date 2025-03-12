@@ -2,7 +2,7 @@ const gulp = require(`gulp`);
 const eslint = require(`gulp-eslint`);
 const stylelint = require(`gulp-stylelint`);
 const babel = require(`gulp-babel`);
-const uglify = require(`gulp-uglify`);
+const terser = require(`gulp-terser`);
 const cleanCSS = require(`gulp-clean-css`);
 const htmlmin = require(`gulp-htmlmin`);
 const sourcemaps = require(`gulp-sourcemaps`);
@@ -31,8 +31,10 @@ gulp.task(`lint-css`, function () {
 gulp.task(`scripts`, function () {
     return gulp.src(`js/**/*.js`)
         .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(uglify())
+        .pipe(babel({
+            plugins: [`@babel/plugin-transform-strict-mode`]
+        }))
+        .pipe(terser())
         .pipe(sourcemaps.write(`.`))
         .pipe(gulp.dest(`prod/js`))
         .pipe(browserSync.stream()); // Reload browser after JS changes
